@@ -14,111 +14,213 @@ const company = companies.find((item) => item.slug === slug);
 if (!company) {
   throw new Error(`Firma bulunamadı: ${slug}`);
 }
+
+const tiktokEmbed = company.tiktokVideoUrl
+  ? await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(company.tiktokVideoUrl)}`)
+      .then((response) => (response.ok ? response.json() : null))
+      .catch(() => null)
+  : null;
+
+const tiktokHtml = tiktokEmbed?.html ?? '';
+
+const galleryImages = company.slug === 'karasahin-kaporta'
+  ? [
+      '/firmalar/karasahin/01.jpeg',
+      '/firmalar/karasahin/02.jpeg',
+      '/firmalar/karasahin/03.jpeg',
+      '/firmalar/karasahin/04.jpeg',
+      '/firmalar/karasahin/05.jpeg',
+      '/firmalar/karasahin/06.jpeg',
+      '/firmalar/karasahin/07.jpeg',
+      '/firmalar/karasahin/08.jpeg',
+      '/firmalar/karasahin/09.jpeg',
+      '/firmalar/karasahin/10.jpeg'
+    ]
+  : [];
 ---
 
 <BaseLayout title={`${company.name} | FirMaps`} description={company.shortDescription}>
-  <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-    <nav aria-label="Breadcrumb" class="mb-8 text-sm text-slate-500">
-      <div class="flex flex-wrap items-center gap-2">
-        <a href="/" class="hover:text-slate-900">Ana Sayfa</a>
-        <span>›</span>
-        <a href={`/firmalar/${company.categorySlug}`} class="hover:text-slate-900">{company.category}</a>
-        <span>›</span>
-        <a href={`/sehirler/${company.citySlug}`} class="hover:text-slate-900">{company.city}</a>
-        <span>›</span>
-        <span class="text-slate-700">{company.name}</span>
-      </div>
-    </nav>
-
-    <article class="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.06)]">
-      <div class="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-        <div class="relative min-h-[360px]">
-          <img src={company.image} alt={company.name} class="h-full w-full object-cover" width="1200" height="900" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/75 via-slate-900/10 to-transparent"></div>
-
-          <div class="absolute bottom-0 left-0 right-0 p-6 text-white sm:p-8">
-            <div class="mb-3 flex items-center gap-3">
-              <span class="rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">{company.heroBadge ?? 'Firmamız'}</span>
-              {company.isVerified && <span class="rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-semibold">Doğrulanmış</span>}
-            </div>
-            <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{company.name}</h1>
-            <p class="mt-3 text-base text-slate-200">{company.shortDescription}</p>
-          </div>
+  <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="sticky top-0 z-30 mb-6 rounded-full border border-slate-200 bg-white/90 px-4 py-3 shadow-[0_10px_25px_rgba(15,23,42,0.05)] backdrop-blur-md">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <a href="/" class="flex items-center gap-2 text-lg font-black text-slate-800">
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">F</span>
+            <span>{company.name}</span>
+          </a>
         </div>
 
-        <aside class="border-t border-slate-200 bg-slate-50 p-6 lg:border-l lg:border-t-0">
-          <div class="space-y-5">
-            <div class="flex items-center justify-between">
-              <span class="text-sm uppercase tracking-[0.2em] text-slate-400">Puan</span>
-              <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">
-                ★ {company.rating.toFixed(1)}
-              </span>
+        <nav class="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+          <a href="#anasayfa" class="transition hover:text-orange-600">Ana Sayfa</a>
+          <a href="#hakkimizda" class="transition hover:text-orange-600">Hakkımızda</a>
+          <a href="#hizmetlerimiz" class="transition hover:text-orange-600">Hizmetlerimiz</a>
+          <a href="#urunlerimiz" class="transition hover:text-orange-600">Ürünlerimiz</a>
+          <a href="#galeri" class="transition hover:text-orange-600">Galeri</a>
+          <a href="#iletisim" class="transition hover:text-orange-600">İletişim</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="hidden rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-orange-200 hover:text-orange-600 sm:inline-flex">Ara</a>
+          <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="inline-flex rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600">WhatsApp</a>
+        </div>
+      </div>
+    </header>
+
+    <section id="anasayfa" class="scroll-mt-28">
+      <div class="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.06)]">
+        <div class="relative min-h-[520px] overflow-hidden">
+          <img src={company.image} alt={company.name} class="h-[520px] w-full object-cover object-center" width="1600" height="900" />
+          <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/55 to-slate-900/20"></div>
+
+          <div class="absolute inset-0 flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+            <div class="flex flex-wrap items-center gap-3 text-white">
+              <span class="rounded-full bg-orange-500 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em]">{company.heroBadge ?? 'Firmamız'}</span>
+              {company.isVerified && <span class="rounded-full bg-emerald-500/90 px-3 py-1 text-xs font-semibold">Doğrulanmış</span>}
             </div>
 
-            <div class="space-y-3 text-sm text-slate-700">
+            <div class="grid gap-6 xl:grid-cols-[1.3fr_0.7fr] xl:items-end">
+              <div class="max-w-3xl text-white">
+                <h1 class="text-4xl font-black tracking-tight sm:text-5xl lg:text-7xl">{company.name}</h1>
+                <p class="mt-4 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">{company.shortDescription}</p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                  <a href="#iletisim" class="inline-flex items-center rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:bg-orange-600">İletişime Geç</a>
+                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(company.address)}`} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/20">Yol Tarifi</a>
+                </div>
+              </div>
+
+              <div class="rounded-[28px] border border-white/15 bg-white/10 p-5 text-white backdrop-blur-md">
+                <div class="space-y-4 text-sm">
+                  <div class="flex items-start gap-3">
+                    <span class="mt-1 text-orange-300">📍</span>
+                    <span class="leading-6">{company.address}</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-orange-300">📞</span>
+                    <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="hover:text-orange-200">{company.phone}</a>
+                  </div>
+                  {company.secondaryPhone && (
+                    <div class="flex items-center gap-3">
+                      <span class="text-orange-300">📞</span>
+                      <a href={`tel:${company.secondaryPhone.replace(/\s+/g, '')}`} class="hover:text-orange-200">{company.secondaryPhone}</a>
+                    </div>
+                  )}
+                  <div class="flex items-center gap-3">
+                    <span class="text-orange-300">🕒</span>
+                    <span>{company.workingHours}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="mt-8 grid gap-8 xl:grid-cols-[1.5fr_0.8fr]">
+      <div class="space-y-8">
+        <section id="hakkimizda" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <div class="mb-5 flex items-center justify-between gap-3">
+            <h2 class="text-3xl font-black text-slate-900">Hakkımızda</h2>
+            <span class="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+          </div>
+          <p class="text-base leading-8 text-slate-600">{company.description}</p>
+
+          {company.seoArticle && company.seoArticle.length > 0 && (
+            <div class="mt-6 space-y-4 text-base leading-8 text-slate-600">
+              {company.seoArticle.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {company.services && company.services.length > 0 && (
+          <section id="hizmetlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 class="text-3xl font-black text-slate-900">Hizmetlerimiz</h2>
+            <div class="mt-6 grid gap-4 md:grid-cols-2">
+              {company.services.map((service) => (
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <h3 class="text-lg font-bold text-slate-800">{service.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-slate-600">{service.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {company.products && company.products.length > 0 && (
+          <section id="urunlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 class="text-3xl font-black text-slate-900">Ürünlerimiz</h2>
+            <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {company.products.map((product) => (
+                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                  <h3 class="text-lg font-bold text-slate-800">{product.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-slate-600">{product.description}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {tiktokHtml && (
+          <section class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 class="text-3xl font-black text-slate-900">İzleyin</h2>
+            <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3">
+              <div class="tiktok-embed-wrap [&>blockquote]:!m-0 [&>blockquote]:!max-w-none [&>blockquote]:!border-0 [&>iframe]:!mx-auto [&>iframe]:!max-w-full [&>iframe]:!rounded-xl">
+                <Fragment set:html={tiktokHtml} />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {galleryImages.length > 0 && (
+          <section id="galeri" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 class="text-3xl font-black text-slate-900">Galeri</h2>
+            <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {galleryImages.map((image, index) => (
+                <button
+                  type="button"
+                  class="group overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-orange-200"
+                  data-gallery-image={image}
+                  data-gallery-index={index}
+                  aria-label={`${company.name} görsel ${index + 1}`}
+                >
+                  <img src={image} alt={`${company.name} görsel ${index + 1}`} class="h-32 w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" width="600" height="420" />
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section id="iletisim" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 class="text-3xl font-black text-slate-900">İletişim</h2>
+          <div class="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div class="space-y-4 text-sm text-slate-700">
               <div class="flex items-start gap-3">
                 <span class="mt-1 text-orange-500">📍</span>
-                <span>{company.address}</span>
+                <span class="leading-7">{company.address}</span>
               </div>
               <div class="flex items-center gap-3">
                 <span class="text-orange-500">📞</span>
-                <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="hover:text-slate-900">{company.phone}</a>
+                <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="font-medium text-slate-800 hover:text-orange-600">{company.phone}</a>
               </div>
+              {company.secondaryPhone && (
+                <div class="flex items-center gap-3">
+                  <span class="text-orange-500">📞</span>
+                  <a href={`tel:${company.secondaryPhone.replace(/\s+/g, '')}`} class="font-medium text-slate-800 hover:text-orange-600">{company.secondaryPhone}</a>
+                </div>
+              )}
               <div class="flex items-center gap-3">
                 <span class="text-orange-500">🕒</span>
                 <span>{company.workingHours}</span>
               </div>
-            </div>
-
-            <div class="flex flex-col gap-3 pt-2">
-              <a href={company.mapsLink} target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600">Haritada aç</a>
-              <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300">Telefon et</a>
-              <a
-                href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`}
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-600"
-              >
-                <span aria-hidden="true">💬</span>
-                WhatsApp
-              </a>
-            </div>
-          </div>
-        </aside>
-      </div>
-
-      <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.3fr_0.7fr]">
-        <div>
-          <section class="mb-10">
-            <h2 class="text-2xl font-bold text-slate-900">Hakkımızda</h2>
-            <p class="mt-4 text-base leading-8 text-slate-600">{company.description}</p>
-          </section>
-
-          <section class="mb-10">
-            <h2 class="text-2xl font-bold text-slate-900">Hizmetler</h2>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2">
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <h3 class="font-semibold text-slate-800">Transit Kesim</h3>
-                <p class="mt-2 text-sm leading-6 text-slate-600">Aracınızın kullanım amacına göre milimetrik ölçülerle profesyonel kesim işlemleri.</p>
-              </div>
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <h3 class="font-semibold text-slate-800">Kaporta İmalatı</h3>
-                <p class="mt-2 text-sm leading-6 text-slate-600">Kesim sonrası yeni forma uygun kaporta ve güçlendirme uygulamaları.</p>
-              </div>
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <h3 class="font-semibold text-slate-800">Özel Kasa</h3>
-                <p class="mt-2 text-sm leading-6 text-slate-600">Şasi ve araç yapısına tam uygun dayanıklı özel kasa imalatı.</p>
-              </div>
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <h3 class="font-semibold text-slate-800">Genel Onarım</h3>
-                <p class="mt-2 text-sm leading-6 text-slate-600">Hasarlı kaporta ve aksamların orijinal formuna dönüştürülmesi.</p>
+              <div class="flex flex-wrap gap-3 pt-2">
+                <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-600">WhatsApp</a>
+                <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(company.address)}`} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300">Yol tarifi</a>
               </div>
             </div>
-          </section>
 
-          <section>
-            <h2 class="text-2xl font-bold text-slate-900">Google Maps</h2>
-            <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+            <div class="overflow-hidden rounded-2xl border border-slate-200">
               <iframe
                 title={`${company.name} konumu`}
                 src={company.mapsEmbedUrl}
@@ -128,29 +230,181 @@ if (!company) {
                 allowfullscreen
               ></iframe>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
+      </div>
 
-        <aside class="space-y-6">
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-            <h3 class="text-lg font-semibold text-slate-900">Şehir & İlçe</h3>
-            <div class="mt-4 space-y-3 text-sm text-slate-600">
-              <p><span class="font-medium text-slate-800">Şehir:</span> {company.city}</p>
-              <p><span class="font-medium text-slate-800">İlçe:</span> {company.district}</p>
-              <p><span class="font-medium text-slate-800">Kategori:</span> {company.category}</p>
+      <aside class="space-y-6">
+        <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="mb-4 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Puan</span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+          </div>
+
+          <div class="space-y-4 text-sm text-slate-700">
+            <div class="flex items-start gap-3">
+              <span class="text-orange-500">📍</span>
+              <span class="leading-7">{company.address}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-orange-500">📞</span>
+              <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="hover:text-slate-900">{company.phone}</a>
+            </div>
+            {company.secondaryPhone && (
+              <div class="flex items-center gap-3">
+                <span class="text-orange-500">📞</span>
+                <a href={`tel:${company.secondaryPhone.replace(/\s+/g, '')}`} class="hover:text-slate-900">{company.secondaryPhone}</a>
+              </div>
+            )}
+            <div class="flex items-center gap-3">
+              <span class="text-orange-500">🕒</span>
+              <span>{company.workingHours}</span>
             </div>
           </div>
 
-          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-            <h3 class="text-lg font-semibold text-slate-900">İç Bağlantılar</h3>
-            <ul class="mt-4 space-y-3 text-sm text-slate-600">
-              <li><a href={`/firmalar/${company.categorySlug}`} class="hover:text-slate-900">{company.category} firmaları</a></li>
-              <li><a href={`/sehirler/${company.citySlug}`} class="hover:text-slate-900">{company.city} firmaları</a></li>
-              <li><a href={`/sehirler/${company.citySlug}/${company.districtSlug}`} class="hover:text-slate-900">{company.district} firmaları</a></li>
-            </ul>
+          <div class="mt-6 flex flex-col gap-3">
+            <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="inline-flex items-center justify-center rounded-full bg-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600">Telefon Et</a>
+            <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-full bg-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-600">WhatsApp</a>
+            <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(company.address)}`} target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300">Yol Tarifi</a>
           </div>
-        </aside>
-      </div>
-    </article>
+        </div>
+
+        {company.socials && company.socials.length > 0 && (
+          <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Sosyal Medya</p>
+            <div class="flex flex-wrap gap-2">
+              {company.socials.map((social) => {
+                const iconMap = {
+                  tiktok: '♪',
+                  instagram: '◎',
+                  facebook: 'f',
+                  youtube: '▶',
+                  x: 'X',
+                  linkedin: 'in'
+                };
+
+                return (
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.platform}
+                    class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-sm font-bold text-slate-700 transition hover:border-orange-200 hover:text-orange-600"
+                  >
+                    {iconMap[social.platform]}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
   </main>
+
+  {galleryImages.length > 0 && (
+    <div id="gallery-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm">
+      <div class="relative w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-900 shadow-2xl shadow-slate-950/50">
+        <button type="button" id="gallery-prev" class="absolute left-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20" aria-label="Önceki görsel">‹</button>
+        <button type="button" id="gallery-next" class="absolute right-4 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20" aria-label="Sonraki görsel">›</button>
+        <button type="button" id="gallery-close" class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-xl text-white transition hover:bg-white/20" aria-label="Görseli kapat">×</button>
+        <img id="gallery-modal-image" src="" alt="" class="max-h-[80vh] w-full object-contain" />
+        <div id="gallery-thumbs" class="flex gap-2 overflow-x-auto border-t border-white/10 bg-slate-950/40 p-3">
+          {galleryImages.map((image, index) => (
+            <button
+              type="button"
+              data-gallery-thumb={image}
+              data-gallery-thumb-index={index}
+              class="h-16 w-20 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-800 p-0.5 transition hover:border-orange-300"
+              aria-label={`${company.name} görsel ${index + 1}`}
+            >
+              <img src={image} alt={`${company.name} görsel ${index + 1}`} class="h-full w-full object-cover" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  {galleryImages.length > 0 && (
+    <script is:inline>
+      const galleryButtons = Array.from(document.querySelectorAll('[data-gallery-image]'));
+      const galleryModal = document.getElementById('gallery-modal');
+      const galleryModalImage = document.getElementById('gallery-modal-image');
+      const galleryCloseButton = document.getElementById('gallery-close');
+      const galleryPrevButton = document.getElementById('gallery-prev');
+      const galleryNextButton = document.getElementById('gallery-next');
+      const galleryThumbButtons = Array.from(document.querySelectorAll('[data-gallery-thumb]'));
+
+      if (galleryButtons.length && galleryModal && galleryModalImage && galleryCloseButton && galleryPrevButton && galleryNextButton) {
+        const galleryImageList = galleryButtons.map((button) => button.getAttribute('data-gallery-image')).filter(Boolean);
+        let galleryIndex = 0;
+
+        const updateGalleryModal = (index) => {
+          const safeIndex = (index + galleryImageList.length) % galleryImageList.length;
+          galleryIndex = safeIndex;
+          const imageSrc = galleryImageList[safeIndex];
+          galleryModalImage.src = imageSrc;
+          galleryModalImage.alt = `Firma görsel ${safeIndex + 1}`;
+
+          galleryThumbButtons.forEach((button) => {
+            const thumbIndex = Number(button.getAttribute('data-gallery-thumb-index'));
+            const active = thumbIndex === safeIndex;
+            button.classList.toggle('border-orange-400', active);
+            button.classList.toggle('ring-2', active);
+            button.classList.toggle('ring-orange-300', active);
+          });
+        };
+
+        const openGallery = (index) => {
+          updateGalleryModal(index);
+          galleryModal.classList.remove('hidden');
+          galleryModal.classList.add('flex');
+        };
+
+        const closeGallery = () => {
+          galleryModal.classList.add('hidden');
+          galleryModal.classList.remove('flex');
+        };
+
+        galleryButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const index = Number(button.getAttribute('data-gallery-index'));
+            openGallery(index);
+          });
+        });
+
+        galleryThumbButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const index = Number(button.getAttribute('data-gallery-thumb-index'));
+            openGallery(index);
+          });
+        });
+
+        galleryPrevButton.addEventListener('click', () => openGallery(galleryIndex - 1));
+        galleryNextButton.addEventListener('click', () => openGallery(galleryIndex + 1));
+        galleryCloseButton.addEventListener('click', closeGallery);
+        galleryModal.addEventListener('click', (event) => {
+          if (event.target === galleryModal) {
+            closeGallery();
+          }
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (galleryModal.classList.contains('hidden')) return;
+          if (event.key === 'Escape') closeGallery();
+          if (event.key === 'ArrowLeft') openGallery(galleryIndex - 1);
+          if (event.key === 'ArrowRight') openGallery(galleryIndex + 1);
+        });
+      }
+    </script>
+  )}
+
+  <div class="fixed bottom-4 left-4 z-40 md:hidden">
+    <a href={`tel:${company.phone.replace(/\s+/g, '')}`} class="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-2xl text-white shadow-lg shadow-orange-500/30">📞</a>
+  </div>
+
+  <div class="fixed bottom-4 right-4 z-40 md:hidden">
+    <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-2xl text-white shadow-lg shadow-emerald-500/30">💬</a>
+  </div>
 </BaseLayout>

@@ -6,6 +6,11 @@ export type Category = {
   count: number;
 };
 
+export type SocialLink = {
+  platform: 'tiktok' | 'instagram' | 'facebook' | 'youtube' | 'x' | 'linkedin';
+  url: string;
+};
+
 export type Company = {
   id: string;
   name: string;
@@ -24,12 +29,18 @@ export type Company = {
   image: string;
   price: string;
   phone: string;
+  secondaryPhone?: string;
   address: string;
   workingHours: string;
   mapsEmbedUrl: string;
   mapsLink: string;
   isVerified: boolean;
   heroBadge?: string;
+  tiktokVideoUrl?: string;
+  products?: { title: string; description: string }[];
+  services?: { title: string; description: string }[];
+  seoArticle?: string[];
+  socials?: SocialLink[];
 };
 
 export type City = {
@@ -66,15 +77,37 @@ export const companies: Company[] = [
     service: 'Transit kesim ve kaporta tadilatı',
     shortDescription: 'Ford Transit ve benzeri ticari araçlar için profesyonel kesim, kaporta ve özel kasa çözümleri.',
     description: 'Nevşehir Sanayi Sitesi’nde faaliyet gösteren Karaşahin Kaporta, araç kullanım amacınıza uygun ve verimli çözümler sunar. Aydoğan Karaşahin liderliğinde, ticari ve özel araçlar için transıt kesim, kaporta imalatı, özel kasa üretimi ve genel kaporta onarım hizmetleri vermektedir.',
-    image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=80',
+    image: '/firmalar/karasahin/Hero.jpeg',
     price: 'İletişime geçin',
     phone: '+90 545 113 53 50',
-    address: 'Lale Mahallesi, Sümer, Sanayi Sitesi Sk. No:14 Blok No:17, 50040 Nevşehir Merkez/Nevşehir',
+    secondaryPhone: '+90 534 421 72 30',
+    address: 'Lale Mahallesi, Sümer, Sanayi Sitesi Sk. No:14 Blok No:25, 50040 Nevşehir Merkez/Nevşehir',
     workingHours: 'Hafta içi 08:00 - 20:00',
-    mapsEmbedUrl: 'https://www.google.com/maps?q=Lale%20Mahallesi%2C%20S%C3%BCmer%2C%20Sanayi%20Sitesi%20Sk.%20No%3A14%20Blok%20No%3A17%2C%2050040%20Nev%C5%9Fehir%20Merkez%2FNev%C5%9Fehir&output=embed',
-    mapsLink: 'https://maps.google.com/?q=Lale%20Mahallesi%2C%20S%C3%BCmer%2C%20Sanayi%20Sitesi%20Sk.%20No%3A14%20Blok%20No%3A17%2C%2050040%20Nev%C5%9Fehir%20Merkez%2FNev%C5%9Fehir',
+    mapsEmbedUrl: 'https://www.google.com/maps?q=Lale%20Mahallesi%2C%20S%C3%BCmer%2C%20Sanayi%20Sitesi%20Sk.%20No%3A14%20Blok%20No%3A25%2C%2050040%20Nev%C5%9Fehir%20Merkez%2FNev%C5%9Fehir&output=embed',
+    mapsLink: 'https://maps.google.com/?q=Lale%20Mahallesi%2C%20S%C3%BCmer%2C%20Sanayi%20Sitesi%20Sk.%20No%3A14%20Blok%20No%3A25%2C%2050040%20Nev%C5%9Fehir%20Merkez%2FNev%C5%9Fehir',
     isVerified: true,
-    heroBadge: 'Transit kesim uzmanı'
+    heroBadge: 'Transit kesim uzmanı',
+    tiktokVideoUrl: 'https://vt.tiktok.com/ZSqDWmyog/',
+    services: [
+      { title: 'Transit kesim', description: 'Ford Transit ve benzeri ticari araçlar için kullanım amacına uygun özel kesim ve düzenleme çözümleri.' },
+      { title: 'Kaporta imalatı', description: 'Araç şasisine uygun, dayanıklı ve estetik kaporta üretimi ve onarımları.' },
+      { title: 'Özel kasa üretimi', description: 'Kargo, taşıma ve ticari kullanım için özel boyutlu kasa ve modül çözümleri.' },
+      { title: 'Genel kaporta onarım', description: 'Hasarlı bölge tamiri, yenileme ve performans odaklı rötuş işlemleri.' }
+    ],
+    products: [
+      { title: 'Transit kilitli kasa', description: 'Seyahat ve yük taşıma için güvenli, dayanıklı ve geniş iç hacimli kasa çözümü.' },
+      { title: 'Özel ticari araç düzeni', description: 'İşletme ihtiyacına göre kişiselleştirilmiş iç düzen ve kullanım alanı tasarımı.' },
+      { title: 'Kaporta yenileme paketi', description: 'Araç gövdesini modern ve estetik görünümle yeniden tasarlama hizmeti.' }
+    ],
+    seoArticle: [
+      'Karaşahin Kaporta, Nevşehir’de ticari araç kullanımı için güvenilir, estetik ve işlevsel çözümler sunan bir kaporta ve transit kesim uzmanıdır. Ford Transit ve benzeri araçlar için özel ölçü ve kullanım ihtiyacına göre tasarlanan hizmetler, işletmelerin taşıma kapasitesini artırır.',
+      'Şirket, transit kesim, kaporta imalatı, özel kasa üretimi ve genel kaporta onarım hizmetleriyle araç sahiplerine pratik çözümler sunmaktadır. Her işin amacına uygun tasarım yaklaşımı, hem yük güvenliğini hem de araç görsel bütünlüğünü koruyarak uzun ömürlü kullanım sağlar.',
+      'Nevşehir merkezde faaliyet gösteren Karaşahin Kaporta, müşteri odaklı çalışma prensibiyle araçlarının kullanım amacına göre özelleştirme yapar. Bu yaklaşım, ticari araç sahiplerinin iş verimliliğini artırırken, araçları daha düzenli ve profesyonel bir görünüme kavuşturur.',
+      'Yüksek kaliteli malzeme, dikkatli üretim ve ölçü kontrolü ile sunulan çözümler, firmaların güvenilir bir kaporta partneri aramasında öne çıkan unsurlardandır. Karaşahin Kaporta, araçlarını daha işlevsel ve daha verimli kullanmak isteyenler için kapsamlı çözümler üretmeye devam etmektedir.'
+    ],
+    socials: [
+      { platform: 'tiktok', url: 'https://www.tiktok.com/@sertkayaotmtiv' }
+    ]
   },
   {
     id: 'aster-design-studio',
