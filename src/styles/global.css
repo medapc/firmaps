@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'Inter', 'Segoe UI', sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+body {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.2);
+}

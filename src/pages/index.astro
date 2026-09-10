@@ -1,11 +1,220 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBar from '../components/SearchBar.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import CompanyCard from '../components/CompanyCard.astro';
+import { categories, companies, cities, steps, reasons, seoContent } from '../data/site';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="FirMaps | Modern Firma Rehberi" description="Güvenilir firmaları kategori, şehir ve ilçe bazında bulabileceğiniz modern firma rehberi.">
+  <div class="min-h-screen bg-slate-50">
+    <header class="border-b border-slate-200 bg-white/90 backdrop-blur-sm">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <a href="/" class="flex items-center gap-3" aria-label="FirMaps ana sayfası">
+          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 text-sm font-bold text-white shadow-md shadow-orange-500/30">F</div>
+          <span class="text-2xl font-extrabold tracking-tight text-slate-900">FirMaps</span>
+        </a>
+
+        <nav aria-label="Ana menü" class="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
+          <a href="#categories" class="hover:text-slate-900">Kategoriler</a>
+          <a href="#featured" class="hover:text-slate-900">Öne Çıkanlar</a>
+          <a href="#cities" class="hover:text-slate-900">Şehirler</a>
+          <a href="#how-it-works" class="hover:text-slate-900">Nasıl Çalışır</a>
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button class="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300 md:inline-flex">Giriş</button>
+          <button class="rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600">İlan Ver</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.12),_transparent_30%),radial-gradient(circle_at_right,_rgba(148,163,184,0.18),_transparent_25%)]"></div>
+        <div class="relative mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 lg:px-8 lg:pb-24 lg:pt-20">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-600">Güvenilir firma rehberi</p>
+            <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Konum, hizmet ve kaliteyle doğru firmayı bulun.
+            </h1>
+            <p class="mt-6 text-lg leading-8 text-slate-600">
+              FirMaps ile şehir, ilçe ve kategori bazlı firmaları hızlıca keşfedin; güvenilir seçenekleri tek ekranda görün.
+            </p>
+          </div>
+
+          <div class="mx-auto mt-10 max-w-5xl rounded-[32px] border border-slate-200 bg-white/80 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm">
+            <div class="flex flex-wrap items-center gap-3 px-2 pb-4 pt-1 text-sm text-slate-500">
+              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Popüler: Emlak</span>
+              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Sağlık</span>
+              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Yazılım</span>
+            </div>
+            <SearchBar />
+          </div>
+        </div>
+      </section>
+
+      <section id="categories" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionTitle eyebrow="Kategoriler" title="Popüler hizmet alanları" description="İhtiyacınıza en uygun sektörleri keşfedin ve yerel firmalara hızlı ulaşın." align="center" />
+
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((category) => (
+            <a href={`/firmalar/${category.slug}`} class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_24px_50px_rgba(249,115,22,0.12)]">
+              <div class="flex items-start justify-between">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-2xl shadow-sm">{category.icon}</div>
+                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">{category.count}+</span>
+              </div>
+              <h3 class="mt-6 text-xl font-semibold text-slate-900">{category.name}</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="featured" class="bg-white py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <SectionTitle eyebrow="Öne çıkanlar" title="En çok tercih edilen firmalar" description="Kaliteli hizmet sunan firmaları puan ve yorum bazlı inceleyin." />
+            <a href="/firmalar" class="inline-flex items-center gap-2 text-sm font-semibold text-orange-600">Tüm firmalar <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="mt-10 grid gap-6 lg:grid-cols-2 xl:grid-cols-4">
+            {companies.map((company) => (
+              <CompanyCard {...company} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="cities" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionTitle eyebrow="Şehirler" title="Popüler şehir rehberleri" description="Şehrinize göre en çok aranan firmalara ulaşın." align="center" />
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {cities.map((city) => (
+            <a href={`/sehirler/${city.slug}`} class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(15,23,42,0.08)]">
+              <div class="relative overflow-hidden">
+                <img src={city.image} alt={city.name} class="h-60 w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" width="1200" height="800" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
+                  <p class="text-xs uppercase tracking-[0.2em] text-orange-200">{city.count} firma</p>
+                  <h3 class="mt-2 text-2xl font-bold">{city.name}</h3>
+                </div>
+              </div>
+              <div class="p-5">
+                <p class="text-sm leading-6 text-slate-600">{city.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="how-it-works" class="bg-slate-100 py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle eyebrow="Nasıl çalışır" title="Üç adımda doğru firmayı bulun" description="Kolay, hızlı ve güvenilir arama deneyimi." align="center" />
+
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            {steps.map((step, index) => (
+              <div class="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_40px_rgba(15,23,42,0.04)]">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-lg font-bold text-white">0{index + 1}</div>
+                <h3 class="mt-6 text-xl font-semibold text-slate-900">{step.title}</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <SectionTitle eyebrow="Neden FirMaps" title="Firmalara ulaşmanın daha akıllı yolu" description="Güven, görünürlük ve pratik erişim odaklı bir rehber deneyimi." align="center" />
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {reasons.map((reason) => (
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)]">
+              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-xl text-orange-600">✓</div>
+              <h3 class="text-lg font-semibold text-slate-900">{reason.title}</h3>
+              <p class="mt-3 text-sm leading-6 text-slate-600">{reason.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-white py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="rounded-[32px] border border-slate-200 bg-slate-50 p-8 shadow-[0_25px_70px_rgba(15,23,42,0.06)] lg:p-12">
+            <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-500">SEO içerik</p>
+                <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Yerel aramalarda daha görünür olmanın zamanı geldi.</h2>
+                <div class="mt-6 space-y-4 text-base leading-7 text-slate-600">
+                  {seoContent.map((text) => (
+                    <p>{text}</p>
+                  ))}
+                </div>
+              </div>
+
+              <div class="rounded-3xl bg-slate-900 p-7 text-white shadow-[0_20px_60px_rgba(15,23,42,0.2)]">
+                <p class="text-sm font-medium uppercase tracking-[0.2em] text-orange-300">FirMaps avantajı</p>
+                <ul class="mt-6 space-y-4 text-sm text-slate-200">
+                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>Şehir ve ilçe bazlı arama desteği</span></li>
+                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>SEO odaklı yapısal içerik düzeni</span></li>
+                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>Güçlü iç bağlantı ağı ve kategori sayfaları</span></li>
+                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>İleride CMS’e kolay geçiş kabiliyeti</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8">
+        <div class="rounded-[32px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 text-center text-white shadow-[0_25px_70px_rgba(15,23,42,0.18)] lg:p-12">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-300">FirMaps</p>
+          <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">İstediğiniz firma için hemen başlayın.</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">Güvenilir firmaları bulun, karşılaştırın ve doğru iletişim bilgisine ulaşın.</p>
+          <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href="#featured" class="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:bg-orange-600">Firmaları keşfet</a>
+            <a href="#categories" class="rounded-full border border-slate-600 px-6 py-3 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-800">Kategoriler</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] lg:px-8">
+        <div>
+          <div class="flex items-center gap-3">
+            <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500 text-sm font-bold text-white">F</div>
+            <span class="text-2xl font-extrabold tracking-tight text-slate-900">FirMaps</span>
+          </div>
+          <p class="mt-4 max-w-sm text-sm leading-6 text-slate-600">Yerel arama, güvenilir firma keşfi ve dijital görünürlük için modern bir rehber.</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Şirket</h3>
+          <ul class="mt-4 space-y-3 text-sm text-slate-600">
+            <li><a href="#" class="hover:text-slate-900">Hakkımızda</a></li>
+            <li><a href="#" class="hover:text-slate-900">İletişim</a></li>
+            <li><a href="#" class="hover:text-slate-900">İlan Ver</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Kategoriler</h3>
+          <ul class="mt-4 space-y-3 text-sm text-slate-600">
+            {categories.slice(0, 4).map((category) => (
+              <li><a href={`/firmalar/${category.slug}`} class="hover:text-slate-900">{category.name}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Bülten</h3>
+          <div class="mt-4 flex gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2">
+            <input aria-label="E-posta adresi" type="email" placeholder="E-posta adresiniz" class="h-12 flex-1 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-orange-400" />
+            <button class="h-12 rounded-xl bg-orange-500 px-4 text-sm font-semibold text-white hover:bg-orange-600">Gönder</button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
