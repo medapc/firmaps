@@ -37,6 +37,7 @@ export type Company = {
   isVerified: boolean;
   heroBadge?: string;
   tiktokVideoUrl?: string;
+  keywords?: string[];
   products?: { title: string; description: string }[];
   services?: { title: string; description: string }[];
   seoArticle?: string[];
@@ -75,8 +76,8 @@ export const companies: Company[] = [
     rating: 4.9,
     reviewCount: 86,
     service: 'Transit kesim ve kaporta tadilatı',
-    shortDescription: 'Ford Transit ve benzeri ticari araçlar için profesyonel kesim, kaporta ve özel kasa çözümleri.',
-    description: 'Nevşehir Sanayi Sitesi’nde faaliyet gösteren Karaşahin Kaporta, araç kullanım amacınıza uygun ve verimli çözümler sunar. Aydoğan Karaşahin liderliğinde, ticari ve özel araçlar için transıt kesim, kaporta imalatı, özel kasa üretimi ve genel kaporta onarım hizmetleri vermektedir.',
+    shortDescription: 'Nevşehir transit kesim, Ford Transit pikap kesimi, kaporta imalatı ve özel kasa üretimi için güvenilir çözüm merkezi.',
+    description: 'Nevşehir’de transit kesim, Ford Transit pikap kesimi, panelvandan kamyonete dönüştürme ve özel kasa üretimi konusunda uzman Karaşahin Kaporta, ticari araç kullanıcılarının iş ihtiyaçlarına uygun çözümler üretir. Sanayi sitesinde faaliyet gösteren firma, Ford Transit, Transit 330S ve benzeri araçlarda dayanıklı kaporta, kesim ve kasa işlemleriyle öne çıkar.',
     image: '/firmalar/karasahin/Hero.jpeg',
     price: 'İletişime geçin',
     phone: '+90 545 113 53 50',
@@ -88,6 +89,17 @@ export const companies: Company[] = [
     isVerified: true,
     heroBadge: 'Transit kesim uzmanı',
     tiktokVideoUrl: 'https://vt.tiktok.com/ZSqDWmyog/',
+    keywords: [
+      'Nevşehir transit kesim',
+      'Nevşehir transit kesim fiyatları',
+      'Ford Transit kesim',
+      'Ford Transit pikap kesimi',
+      'Nevşehir Ford Transit kasa imalatı',
+      'Panelvandan kamyonete dönüştürme Nevşehir',
+      'Transit kesim ustaları Nevşehir',
+      'Kaporta imalatı Nevşehir',
+      'Transit kesim fiyatları Nevşehir'
+    ],
     services: [
       { title: 'Transit kesim', description: 'Ford Transit ve benzeri ticari araçlar için kullanım amacına uygun özel kesim ve düzenleme çözümleri.' },
       { title: 'Kaporta imalatı', description: 'Araç şasisine uygun, dayanıklı ve estetik kaporta üretimi ve onarımları.' },
@@ -100,10 +112,10 @@ export const companies: Company[] = [
       { title: 'Kaporta yenileme paketi', description: 'Araç gövdesini modern ve estetik görünümle yeniden tasarlama hizmeti.' }
     ],
     seoArticle: [
-      'Karaşahin Kaporta, Nevşehir’de ticari araç kullanımı için güvenilir, estetik ve işlevsel çözümler sunan bir kaporta ve transit kesim uzmanıdır. Ford Transit ve benzeri araçlar için özel ölçü ve kullanım ihtiyacına göre tasarlanan hizmetler, işletmelerin taşıma kapasitesini artırır.',
-      'Şirket, transit kesim, kaporta imalatı, özel kasa üretimi ve genel kaporta onarım hizmetleriyle araç sahiplerine pratik çözümler sunmaktadır. Her işin amacına uygun tasarım yaklaşımı, hem yük güvenliğini hem de araç görsel bütünlüğünü koruyarak uzun ömürlü kullanım sağlar.',
-      'Nevşehir merkezde faaliyet gösteren Karaşahin Kaporta, müşteri odaklı çalışma prensibiyle araçlarının kullanım amacına göre özelleştirme yapar. Bu yaklaşım, ticari araç sahiplerinin iş verimliliğini artırırken, araçları daha düzenli ve profesyonel bir görünüme kavuşturur.',
-      'Yüksek kaliteli malzeme, dikkatli üretim ve ölçü kontrolü ile sunulan çözümler, firmaların güvenilir bir kaporta partneri aramasında öne çıkan unsurlardandır. Karaşahin Kaporta, araçlarını daha işlevsel ve daha verimli kullanmak isteyenler için kapsamlı çözümler üretmeye devam etmektedir.'
+      'Karaşahin Kaporta, Nevşehir transit kesim alanında Ford Transit ve benzeri ticari araçlar için güvenilir, estetik ve işlevsel çözümler sunan bir kaporta ve özel kasa üretim uzmanıdır. Nevşehir transit kesim fiyatları arayan müşteriler için uygun ölçüler ve kullanım amacına göre tasarlanan çözümler, taşıma verimliliğini artırır.',
+      'Firmamızın uzmanlık alanları arasında Ford Transit kesim, Ford Transit pikap kesimi, panelvandan kamyonete dönüştürme, özel kasa üretimi ve kaporta imalatı yer alır. Transit kesiminde doğru şasi düzeni, dayanıklı kasa yapısı ve güvenli kullanım, müşterilerin en çok dikkat ettiği başlıklardandır.',
+      'Nevşehir merkezde faaliyet gösteren Karaşahin Kaporta, araçların işlevselliğini ve kullanım konforunu ön planda tutar. Araç sahipleri, bölüm ve ölçüleri doğru planlanan transit kesim, tekli veya çift teker model seçenekleri ile iş ihtiyaçlarına uygun çözümler elde eder.',
+      'Yüksek kaliteli malzeme, dikkatli üretim ve ölçü kontrolü ile sunulan hizmetler, transit kesim ustaları arasında güvenilir bir tercih olmasını sağlar. Müşterilerin ihtiyacına göre tasarlanan Ford Transit kasa imalatı ve kaporta yenileme süreçleri, araçların hem iş verimliliğini hem de görünümünü iyileştirir.'
     ],
     socials: [
       { platform: 'tiktok', url: 'https://www.tiktok.com/@sertkayaotmtiv' }
@@ -208,11 +220,41 @@ export const companies: Company[] = [
 ];
 
 export const cities: City[] = [
-  { name: 'İstanbul', slug: 'istanbul', description: 'Yüksek talep ve geniş firma ağı', image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80', count: 418 },
-  { name: 'Ankara', slug: 'ankara', description: 'Kurumsal hizmetler ve ticaret merkezi', image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1200&q=80', count: 312 },
-  { name: 'İzmir', slug: 'izmir', description: 'Turizm, hizmet ve yaşam kalitesi', image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=80', count: 267 },
-  { name: 'Bursa', slug: 'bursa', description: 'Sanayi ve modern yaşam ekosistemi', image: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=1200&q=80', count: 201 },
-  { name: 'Nevşehir', slug: 'nevsehir', description: 'Ticari araç dönüşüm ve kaporta uzmanlığı', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80', count: 12 }
+  {
+    name: 'İstanbul',
+    slug: 'istanbul',
+    description: 'Yüksek talep ve geniş firma ağı',
+    image: 'https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&w=1200&q=80',
+    count: 1284
+  },
+  {
+    name: 'Ankara',
+    slug: 'ankara',
+    description: 'Kurumsal hizmetler ve ticaret merkezi',
+    image: 'https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=1200&q=80',
+    count: 892
+  },
+  {
+    name: 'İzmir',
+    slug: 'izmir',
+    description: 'Turizm, hizmet ve yaşam kalitesi',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+    count: 734
+  },
+  {
+    name: 'Bursa',
+    slug: 'bursa',
+    description: 'Sanayi ve modern yaşam ekosistemi',
+    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80',
+    count: 631
+  },
+  {
+    name: 'Nevşehir',
+    slug: 'nevsehir',
+    description: 'Ticari araç dönüşüm ve kaporta uzmanlığı',
+    image: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80',
+    count: 48
+  }
 ];
 
 export const steps = [
@@ -222,14 +264,27 @@ export const steps = [
 ];
 
 export const reasons = [
-  { title: 'Doğru firma', description: 'İhtiyacınıza en uygun sektörel seçenekleri filtreleyin.' },
-  { title: 'Yerel SEO', description: 'Şehir ve ilçe bazlı aramalarda daha görünür olun.' },
-  { title: 'Güvenilir profil', description: 'Yorum, puan ve hizmet bilgileriyle karar vermeyi kolaylaştırın.' },
-  { title: 'Hızlı erişim', description: 'En kritik bilgileri tek sayfada toplayan modern arayüz.' }
+  { title: 'Güncel firma profilleri', description: 'Firma bilgileri düzenli olarak güncellenir ve kolayca kontrol edilir.' },
+  { title: 'Yerel arama', description: 'Şehir ve ilçe bazlı firmaları hızlıca bulun.' },
+  { title: 'Doğrudan iletişim', description: 'Telefon, WhatsApp ve web sitesine tek tıklama ile ulaşın.' },
+  { title: 'Güvenilir bilgiler', description: 'Firma profilleri net, anlaşılır ve karar vermeyi kolaylaştırır.' }
 ];
 
-export const seoContent = [
-  'FirMaps, şehir ve ilçe bazlı firma aramalarında kullanıcıların doğru adrese ulaşmasını kolaylaştırır.',
-  'Kategorilere göre filtreleme, sektör odaklı rehberlik ve güçlü yerel arama desteği sunar.',
-  'Modern web yapısı sayesinde firmalar, hizmetler ve şehirler arasında güçlü iç bağlantı ağı kurulur.'
-];
+export const seoContent = {
+  title: "Türkiye'nin modern firma rehberi",
+  paragraphs: [
+    'FirMaps, Türkiye genelindeki firmaları kategori, şehir ve ilçe bazında keşfetmenizi kolaylaştıran modern bir firma rehberidir. Firmalar ararken konum, hizmet alanı ve güvenilirlik gibi kriterleri tek ekranda görme imkanı sunar. Bu sayede kullanıcılar, ihtiyaçlarına en uygun hizmeti daha kısa sürede bulur ve iletişime geçme sürecini hızlandırır.',
+    'Günümüzde yerel arama deneyimi, firmaların görünürlüğü kadar kullanıcı deneyimiyle de öne çıkar. FirMaps, bölgesel arama isteklerini daha anlaşılır hale getirerek kullanıcıların bir şehir içinde veya ilçe bazında arama yapmasını kolaylaştırır. Bu yapı, hem yerel kullanıcıların doğru adrese ulaşmasını sağlar hem de firmaların dijitalde daha güçlü bir görünüm kazanmasına katkı sunar.',
+    'Mimarlık firmaları, restoranlar, otomotiv servisleri, sağlık kuruluşları, emlak danışmanları ve yazılım hizmetleri gibi farklı sektörlerde firmanın uygunluğunu karşılaştırmak için tek bir platform oluşturur. Özellikle şehir bazlı arama yapanlar için FirMaps, ilanların yanında kategori, hizmet ve konum bilgilerini birlikte sunarak güvenli ve hızlı karar vermeyi destekler.',
+    'FirMaps içinde yer alan firmalar, kullanıcıların ihtiyaçlarına uygun şekilde düzenlenir. Bu sayede arama sonuçları sadece isim listesi değil, hizmet kapsamı, çalışma alanı ve yerel erişim gibi değerli bilgilerle zenginleşir. Sektör bazlı içerik yapısı, kullanıcı deneyimini geliştirdiği gibi arama motorları için de anlamlı bir rehber yapısı oluşturur.',
+    'Türkiye genelinde firmalar için modern bir rehber olarak tasarlanan FirMaps, kullanıcı odaklı içerik, doğru kategori hiyerarşisi ve güçlü yerel arama anlayışıyla değer üretir. Kategori sayfaları, şehir rehberleri ve firmaya özel içeriklerin birleşimiyle platform, yalnızca bir liste değil; güvenilir bir erişim ve keşif deneyimi sunar.'
+  ],
+  links: [
+    { label: 'Mimarlık firmaları', href: '/firmalar/mimarlik' },
+    { label: 'Restoranlar', href: '/firmalar/gida' },
+    { label: 'Otomotiv servisleri', href: '/firmalar/kaporta' },
+    { label: 'Sağlık kuruluşları', href: '/firmalar/saglik' },
+    { label: 'Emlak danışmanları', href: '/firmalar/emlak' },
+    { label: 'Yazılım firmaları', href: '/firmalar/yazilim' }
+  ]
+};

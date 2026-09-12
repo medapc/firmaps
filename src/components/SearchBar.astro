@@ -1,22 +1,44 @@
-<form class="mt-8 flex w-full max-w-3xl flex-col gap-3 rounded-2xl border border-slate-200 bg-white/90 p-3 shadow-[0_20px_60px_rgba(15,23,42,0.12)] backdrop-blur sm:flex-row">
-  <label class="sr-only" for="search-query">Firma ara</label>
-  <input
-    id="search-query"
-    type="text"
-    value="Mimarlık, sağlık, emlak..."
-    aria-label="Firma ara"
-    class="h-14 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-700 outline-none transition focus:border-orange-400 focus:bg-white focus:ring-2 focus:ring-orange-100"
-  />
-  <label class="sr-only" for="search-location">Şehir seç</label>
-  <select
-    id="search-location"
-    aria-label="Şehir seç"
-    class="h-14 rounded-xl border border-slate-200 bg-slate-50 px-4 text-base text-slate-700 outline-none transition focus:border-orange-400 focus:bg-white focus:ring-2 focus:ring-orange-100"
-  >
-    <option>İstanbul</option>
-    <option>Ankara</option>
-    <option>İzmir</option>
-    <option>Bursa</option>
-  </select>
-  <button type="submit" class="h-14 rounded-xl bg-orange-500 px-6 text-base font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300">Ara</button>
+<form class="mt-8 w-full max-w-5xl">
+  <div class="rounded-[16px] border border-slate-200 bg-white shadow-[0_4px_20px_rgba(15,23,42,0.08)] ring-1 ring-slate-100">
+    <div class="flex flex-col gap-3 p-3 lg:flex-row lg:items-center lg:gap-0">
+      <label class="flex min-w-0 flex-1 items-center gap-3 rounded-[12px] bg-slate-50 px-4 py-3 transition focus-within:border-orange-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-orange-100 lg:min-h-[68px] lg:rounded-none lg:bg-transparent lg:px-5">
+        <span class="shrink-0 text-xl text-orange-500" aria-hidden="true">🔍</span>
+        <input
+          id="search-query"
+          type="text"
+          placeholder="Firma, hizmet veya kategori ara"
+          aria-label="Firma, hizmet veya kategori ara"
+          class="h-12 w-full min-w-0 border-0 bg-transparent text-base font-medium text-slate-700 placeholder:text-slate-400 outline-none sm:text-lg"
+        />
+      </label>
+
+      <div class="hidden h-8 w-px self-center bg-slate-200 lg:block" aria-hidden="true"></div>
+
+      <label class="flex min-w-0 items-center gap-3 rounded-[12px] bg-slate-50 px-4 py-3 transition focus-within:border-orange-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-orange-100 lg:min-h-[68px] lg:w-[220px] lg:rounded-none lg:bg-transparent lg:px-5">
+        <span class="shrink-0 text-xl text-slate-400" aria-hidden="true">📍</span>
+        <select
+          id="search-location"
+          aria-label="Şehir / İlçe seç"
+          class="h-12 w-full min-w-0 border-0 bg-transparent pr-2 text-base font-medium text-slate-700 outline-none sm:text-lg"
+        >
+          <option value="">Şehir / İlçe</option>
+          <option>İstanbul</option>
+          <option>Ankara</option>
+          <option>İzmir</option>
+          <option>Bursa</option>
+          <option>Nevşehir</option>
+        </select>
+      </label>
+
+      <button type="submit" class="h-[58px] w-full rounded-[12px] bg-orange-500 px-6 text-base font-semibold text-white shadow-[0_16px_30px_rgba(249,115,22,0.28)] transition hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-300 lg:ml-3 lg:h-[62px] lg:min-w-[126px] lg:w-auto lg:rounded-[12px] lg:text-lg">Ara</button>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-2 px-1 pb-1 text-xs text-slate-500 sm:text-sm">
+      <span class="font-medium text-slate-400">Popüler:</span>
+      <span class="rounded-full bg-orange-50 px-2.5 py-1 font-medium text-orange-700">Mimarlık</span>
+      <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">Restoran</span>
+      <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">Diş Kliniği</span>
+      <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-600">Avukat</span>
+    </div>
+  </div>
 </form>

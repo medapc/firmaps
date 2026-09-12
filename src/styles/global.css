@@ -11,10 +11,15 @@ html {
 body {
   min-height: 100vh;
   background: #f8fafc;
+  overflow-x: hidden;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
 }
 
 img {

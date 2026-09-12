@@ -4,6 +4,9 @@ import SearchBar from '../components/SearchBar.astro';
 import SectionTitle from '../components/SectionTitle.astro';
 import CompanyCard from '../components/CompanyCard.astro';
 import { categories, companies, cities, steps, reasons, seoContent } from '../data/site';
+
+const mobileCategories = categories.slice(0, 4);
+const mobileFeaturedCompanies = companies.slice(0, 3);
 ---
 
 <BaseLayout title="FirMaps | Modern Firma Rehberi" description="Güvenilir firmaları kategori, şehir ve ilçe bazında bulabileceğiniz modern firma rehberi.">
@@ -11,7 +14,7 @@ import { categories, companies, cities, steps, reasons, seoContent } from '../da
     <header class="border-b border-slate-200 bg-white/90 backdrop-blur-sm">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <a href="/" class="flex items-center gap-3" aria-label="FirMaps ana sayfası">
-          <img src="/logo.png" alt="FirMaps logo" class="h-12 w-auto sm:h-14" width="220" height="80" />
+          <img src="/logo.png" alt="FirMaps logo" class="h-8 w-auto sm:h-9 md:h-10" width="220" height="80" />
         </a>
 
         <nav aria-label="Ana menü" class="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
@@ -21,10 +24,29 @@ import { categories, companies, cities, steps, reasons, seoContent } from '../da
           <a href="#how-it-works" class="hover:text-slate-900">Nasıl Çalışır</a>
         </nav>
 
-        <div class="flex items-center gap-3">
-          <button class="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300 md:inline-flex">Giriş</button>
+        <div class="hidden items-center gap-3 md:flex">
+          <button class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:border-slate-300">Giriş</button>
           <button class="rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600">İlan Ver</button>
         </div>
+
+        <div class="flex items-center gap-3 md:hidden">
+          <button id="mobile-menu-button" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-xl text-slate-700 shadow-sm transition hover:border-slate-300" aria-expanded="false" aria-controls="mobile-menu" aria-label="Mobil menü">
+            ☰
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden border-t border-slate-200 bg-white md:hidden">
+        <nav aria-label="Mobil ana menü" class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-base font-medium text-slate-700 sm:px-6">
+          <a href="/" class="rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900">Ana Sayfa</a>
+          <a href="#featured" class="rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900">Firmalar</a>
+          <a href="#categories" class="rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900">Kategoriler</a>
+          <a href="#cities" class="rounded-xl px-3 py-2 transition hover:bg-slate-50 hover:text-slate-900">Şehirler</a>
+
+          <div class="my-2 h-px bg-slate-200"></div>
+
+          <a href="#" class="rounded-xl bg-slate-900 px-3 py-2.5 text-center font-semibold text-white transition hover:bg-slate-800">Firma Ekle</a>
+        </nav>
       </div>
     </header>
 
@@ -33,103 +55,189 @@ import { categories, companies, cities, steps, reasons, seoContent } from '../da
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.12),_transparent_30%),radial-gradient(circle_at_right,_rgba(148,163,184,0.18),_transparent_25%)]"></div>
         <div class="relative mx-auto max-w-7xl px-4 pb-20 pt-12 sm:px-6 lg:px-8 lg:pb-24 lg:pt-20">
           <div class="mx-auto max-w-3xl text-center">
-            <p class="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-orange-600">Güvenilir firma rehberi</p>
+            <p class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700">Güvenilir firma rehberi</p>
             <h1 class="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               Konum, hizmet ve kaliteyle doğru firmayı bulun.
             </h1>
             <p class="mt-6 text-lg leading-8 text-slate-600">
-              FirMaps ile şehir, ilçe ve kategori bazlı firmaları hızlıca keşfedin; güvenilir seçenekleri tek ekranda görün.
+              Türkiye'deki firmaları keşfedin.
             </p>
           </div>
 
-          <div class="mx-auto mt-10 max-w-5xl rounded-[32px] border border-slate-200 bg-white/80 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.08)] backdrop-blur-sm">
-            <div class="flex flex-wrap items-center gap-3 px-2 pb-4 pt-1 text-sm text-slate-500">
-              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Popüler: Emlak</span>
-              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Sağlık</span>
-              <span class="rounded-full bg-slate-100 px-2.5 py-1 font-medium text-slate-700">Yazılım</span>
-            </div>
+          <div class="mx-auto mt-10 max-w-5xl">
             <SearchBar />
+          </div>
+
+          <div class="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-2 text-sm text-slate-600">
+            <span class="font-medium text-slate-500">Popüler:</span>
+            <a href="/firmalar/mimarlik" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 transition hover:border-slate-300">Mimarlık</a>
+            <a href="/firmalar/gida" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 transition hover:border-slate-300">Restoran</a>
+            <a href="/firmalar/saglik" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 transition hover:border-slate-300">Sağlık</a>
+            <a href="/firmalar/kaporta" class="rounded-full border border-slate-200 bg-white px-2.5 py-1 transition hover:border-slate-300">Otomotiv</a>
           </div>
         </div>
       </section>
 
-      <section id="categories" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section id="categories" class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <SectionTitle eyebrow="Kategoriler" title="Popüler hizmet alanları" description="İhtiyacınıza en uygun sektörleri keşfedin ve yerel firmalara hızlı ulaşın." align="center" />
 
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-8 hidden gap-3 sm:grid md:grid-cols-2 xl:grid-cols-4">
           {categories.map((category) => (
-            <a href={`/firmalar/${category.slug}`} class="group rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_24px_50px_rgba(249,115,22,0.12)]">
-              <div class="flex items-start justify-between">
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-50 text-2xl shadow-sm">{category.icon}</div>
-                <span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">{category.count}+</span>
+            <a href={`/firmalar/${category.slug}`} class="group rounded-[24px] border border-slate-200 bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition duration-200 hover:-translate-y-1 hover:border-orange-200 hover:shadow-[0_24px_50px_rgba(249,115,22,0.12)] sm:p-5 xl:p-6">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-50 text-2xl shadow-sm sm:h-14 sm:w-14">{category.icon}</div>
+                <span class="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-semibold text-slate-600 sm:text-xs">{category.count}+</span>
               </div>
-              <h3 class="mt-6 text-xl font-semibold text-slate-900">{category.name}</h3>
-              <p class="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+
+              <div class="mt-5">
+                <h3 class="text-base font-bold text-slate-900 sm:text-lg xl:text-xl">{category.name}</h3>
+                <p class="mt-2 text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">{category.description}</p>
+              </div>
+
+              <div class="mt-5 border-t border-slate-100 pt-3">
+                <span class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 group-hover:text-orange-600">
+                  {category.count} firma
+                  <span aria-hidden="true">→</span>
+                </span>
+              </div>
             </a>
           ))}
         </div>
+
+        <div class="mt-8 grid gap-3 sm:hidden">
+          {mobileCategories.map((category) => (
+            <a href={`/firmalar/${category.slug}`} class="group flex items-center justify-between gap-3 rounded-[20px] border border-slate-200 bg-white p-4 shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition hover:border-orange-200">
+              <div class="flex items-center gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-orange-50 text-xl">{category.icon}</div>
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900">{category.name}</h3>
+                  <p class="text-[11px] text-slate-500">{category.count} firma</p>
+                </div>
+              </div>
+              <span class="text-base font-semibold text-slate-700" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Popüler Kategoriler</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {categories.slice(0, 6).map((category) => (
+              <a href={`/firmalar/${category.slug}`} class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100">
+                {category.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-center">
+          <a href="/firmalar" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700 transition hover:text-slate-900">Tüm kategorileri <span aria-hidden="true">→</span></a>
+        </div>
       </section>
 
-      <section id="featured" class="bg-white py-20">
+      <section id="featured" class="bg-white py-14 lg:py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <SectionTitle eyebrow="Öne çıkanlar" title="En çok tercih edilen firmalar" description="Kaliteli hizmet sunan firmaları puan ve yorum bazlı inceleyin." />
-            <a href="/firmalar" class="inline-flex items-center gap-2 text-sm font-semibold text-orange-600">Tüm firmalar <span aria-hidden="true">→</span></a>
+            <a href="/firmalar" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">Tüm firmalar <span aria-hidden="true">→</span></a>
           </div>
 
-          <div class="mt-10 grid gap-6 lg:grid-cols-2 xl:grid-cols-4">
+          <div class="mt-10 hidden gap-6 lg:grid lg:grid-cols-3">
             {companies.map((company) => (
-              <CompanyCard {...company} />
+              <CompanyCard {...company} isVerified={company.isVerified} />
+            ))}
+          </div>
+
+          <div class="mt-8 grid gap-4 md:hidden">
+            {mobileFeaturedCompanies.map((company) => (
+              <CompanyCard {...company} isVerified={company.isVerified} />
+            ))}
+          </div>
+
+          <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Firma Hub</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {companies.slice(0, 8).map((company) => (
+                <a href={`/firma/${company.slug}`} class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100">
+                  {company.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cities" class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <SectionTitle eyebrow="Şehirler" title="Popüler şehir rehberleri" description="Şehrinize göre en çok aranan firmalara ulaşın." align="center" />
+
+        <div class="mt-10 grid gap-4 grid-cols-2 md:grid-cols-2 xl:grid-cols-4">
+          {cities.map((city) => (
+            <a href={`/sehirler/${city.slug}`} class="group overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(15,23,42,0.08)]">
+              <div class="relative overflow-hidden">
+                <img src={city.image} alt={`${city.name} şehri`} class="h-40 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-52 xl:h-64" loading="lazy" width="1200" height="800" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/35 to-transparent"></div>
+                <div class="absolute inset-x-0 bottom-0 p-3 text-white sm:p-5">
+                  <p class="text-[10px] uppercase tracking-[0.16em] text-orange-200 sm:text-[11px]">{city.count.toLocaleString('tr-TR')} firma</p>
+                  <h3 class="mt-1 text-lg font-bold sm:mt-2 sm:text-2xl">{city.name}</h3>
+                </div>
+              </div>
+
+              <div class="flex items-end justify-between gap-2 p-3 sm:p-5">
+                <div>
+                  <p class="text-xs leading-5 text-slate-600 sm:text-sm sm:leading-6">{city.description}</p>
+                </div>
+                <span class="hidden text-sm font-semibold text-slate-800 group-hover:text-orange-600 sm:inline-flex sm:items-center">
+                  <span>Keşfet</span>
+                  <span class="ml-2" aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Popüler Şehirler</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {cities.slice(0, 8).map((city) => (
+              <a href={`/sehirler/${city.slug}`} class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-100">
+                {city.name}
+              </a>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="cities" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionTitle eyebrow="Şehirler" title="Popüler şehir rehberleri" description="Şehrinize göre en çok aranan firmalara ulaşın." align="center" />
-
-        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {cities.map((city) => (
-            <a href={`/sehirler/${city.slug}`} class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_18px_40px_rgba(15,23,42,0.04)] transition hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(15,23,42,0.08)]">
-              <div class="relative overflow-hidden">
-                <img src={city.image} alt={city.name} class="h-60 w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" width="1200" height="800" />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <p class="text-xs uppercase tracking-[0.2em] text-orange-200">{city.count} firma</p>
-                  <h3 class="mt-2 text-2xl font-bold">{city.name}</h3>
-                </div>
-              </div>
-              <div class="p-5">
-                <p class="text-sm leading-6 text-slate-600">{city.description}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      <section id="how-it-works" class="bg-slate-100 py-20">
+      <section id="how-it-works" class="bg-slate-100 py-14 lg:py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionTitle eyebrow="Nasıl çalışır" title="Üç adımda doğru firmayı bulun" description="Kolay, hızlı ve güvenilir arama deneyimi." align="center" />
 
           <div class="mt-10 grid gap-6 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <div class="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_40px_rgba(15,23,42,0.04)]">
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500 text-lg font-bold text-white">0{index + 1}</div>
-                <h3 class="mt-6 text-xl font-semibold text-slate-900">{step.title}</h3>
-                <p class="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
-              </div>
-            ))}
+            {steps.map((step, index) => {
+              const icons = ['🔍', '⚖️', '📞'];
+
+              return (
+                <div class="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)] sm:p-7">
+                  <div class="flex items-center justify-between gap-3">
+                    <span class="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">0{index + 1}</span>
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-50 text-2xl shadow-sm">{icons[index]}</span>
+                  </div>
+
+                  <h3 class="mt-6 text-xl font-bold text-slate-900">{step.title}</h3>
+                  <p class="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionTitle eyebrow="Neden FirMaps" title="Firmalara ulaşmanın daha akıllı yolu" description="Güven, görünürlük ve pratik erişim odaklı bir rehber deneyimi." align="center" />
+      <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+        <SectionTitle eyebrow="Neden FirMaps" title="Neden FirMaps?" description="Geleneksel rehberlerden farklı olarak, firmaları daha hızlı, daha net ve daha güvenilir şekilde bulmanızı sağlar." align="center" />
 
         <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {reasons.map((reason) => (
-            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)]">
-              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-xl text-orange-600">✓</div>
+            <div class="rounded-[24px] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(15,23,42,0.04)]">
+              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-50 text-xl text-orange-600">✓</div>
               <h3 class="text-lg font-semibold text-slate-900">{reason.title}</h3>
               <p class="mt-3 text-sm leading-6 text-slate-600">{reason.description}</p>
             </div>
@@ -137,79 +245,115 @@ import { categories, companies, cities, steps, reasons, seoContent } from '../da
         </div>
       </section>
 
-      <section class="bg-white py-20">
+      <section class="bg-white py-14 lg:py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="rounded-[32px] border border-slate-200 bg-slate-50 p-8 shadow-[0_25px_70px_rgba(15,23,42,0.06)] lg:p-12">
-            <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-500">SEO içerik</p>
-                <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Yerel aramalarda daha görünür olmanın zamanı geldi.</h2>
-                <div class="mt-6 space-y-4 text-base leading-7 text-slate-600">
-                  {seoContent.map((text) => (
-                    <p>{text}</p>
-                  ))}
-                </div>
-              </div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">SEO içerik</p>
+            <h2 class="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{seoContent.title}</h2>
+            <div class="mt-6 space-y-4 text-base leading-7 text-slate-600">
+              {seoContent.paragraphs.map((text) => (
+                <p>{text}</p>
+              ))}
+            </div>
 
-              <div class="rounded-3xl bg-slate-900 p-7 text-white shadow-[0_20px_60px_rgba(15,23,42,0.2)]">
-                <p class="text-sm font-medium uppercase tracking-[0.2em] text-orange-300">FirMaps avantajı</p>
-                <ul class="mt-6 space-y-4 text-sm text-slate-200">
-                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>Şehir ve ilçe bazlı arama desteği</span></li>
-                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>SEO odaklı yapısal içerik düzeni</span></li>
-                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>Güçlü iç bağlantı ağı ve kategori sayfaları</span></li>
-                  <li class="flex gap-3"><span class="mt-1 text-orange-300">•</span><span>İleride CMS’e kolay geçiş kabiliyeti</span></li>
-                </ul>
-              </div>
+            <div class="mt-8 flex flex-wrap gap-2">
+              {seoContent.links.map((link) => (
+                <a href={link.href} class="rounded-full border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-200">
+                  {link.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section class="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8">
+      <section class="mx-auto max-w-7xl px-4 pb-16 pt-14 sm:px-6 lg:px-8 lg:pb-20 lg:pt-16">
         <div class="rounded-[32px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 text-center text-white shadow-[0_25px_70px_rgba(15,23,42,0.18)] lg:p-12">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-300">FirMaps</p>
-          <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">İstediğiniz firma için hemen başlayın.</h2>
-          <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">Güvenilir firmaları bulun, karşılaştırın ve doğru iletişim bilgisine ulaşın.</p>
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-200">FirMaps</p>
+          <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Aradığınız firmayı bulun.</h2>
+          <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">Şehrinizdeki hizmet ve işletmeleri keşfedin.</p>
           <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a href="#featured" class="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition hover:bg-orange-600">Firmaları keşfet</a>
-            <a href="#categories" class="rounded-full border border-slate-600 px-6 py-3 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-800">Kategoriler</a>
+            <a href="#featured" class="rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/25 transition hover:bg-orange-600">Firma Bul</a>
+            <a href="#categories" class="rounded-full border border-slate-600 px-6 py-3 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-800">Firma Ekle</a>
           </div>
         </div>
       </section>
     </main>
 
+    <script>
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          const isOpen = !mobileMenu.classList.contains('hidden');
+          mobileMenu.classList.toggle('hidden', isOpen);
+          mobileMenuButton.setAttribute('aria-expanded', String(!isOpen));
+          mobileMenuButton.textContent = isOpen ? '☰' : '✕';
+        });
+      }
+    </script>
+
     <footer class="border-t border-slate-200 bg-white">
-      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1fr] lg:px-8">
-        <div>
-          <div class="flex items-center gap-3">
-            <img src="/logo.png" alt="FirMaps logo" class="h-12 w-auto sm:h-14" width="220" height="80" />
+      <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[1.1fr_0.7fr_0.8fr_0.8fr_1fr]">
+          <div>
+            <div class="flex items-center gap-3">
+              <img src="/logo.png" alt="FirMaps logo" class="h-9 w-auto sm:h-10" width="220" height="80" />
+            </div>
+            <p class="mt-5 text-2xl font-bold tracking-tight text-slate-900">FirMaps</p>
+            <p class="mt-3 max-w-sm text-sm leading-7 text-slate-600">Türkiye'nin modern firma rehberi.</p>
+            <p class="max-w-sm text-sm leading-7 text-slate-600">Şehrinizdeki güvenilir firmaları keşfedin.</p>
           </div>
-          <p class="mt-4 max-w-sm text-sm leading-6 text-slate-600">Yerel arama, güvenilir firma keşfi ve dijital görünürlük için modern bir rehber.</p>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Keşfet</h3>
+            <ul class="mt-5 space-y-3 text-sm text-slate-600">
+              <li><a href="#featured" class="transition hover:text-slate-900">Firmalar</a></li>
+              <li><a href="#categories" class="transition hover:text-slate-900">Kategoriler</a></li>
+              <li><a href="#cities" class="transition hover:text-slate-900">Şehirler</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Kategoriler</h3>
+            <ul class="mt-5 space-y-3 text-sm text-slate-600">
+              <li><a href="/firmalar/mimarlik" class="transition hover:text-slate-900">Mimarlık</a></li>
+              <li><a href="/firmalar/gida" class="transition hover:text-slate-900">Restoran</a></li>
+              <li><a href="/firmalar/saglik" class="transition hover:text-slate-900">Sağlık</a></li>
+              <li><a href="/firmalar/kaporta" class="transition hover:text-slate-900">Otomotiv</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Popüler Şehirler</h3>
+            <ul class="mt-5 space-y-3 text-sm text-slate-600">
+              <li><a href="/sehirler/istanbul" class="transition hover:text-slate-900">İstanbul</a></li>
+              <li><a href="/sehirler/ankara" class="transition hover:text-slate-900">Ankara</a></li>
+              <li><a href="/sehirler/izmir" class="transition hover:text-slate-900">İzmir</a></li>
+              <li><a href="/sehirler/bursa" class="transition hover:text-slate-900">Bursa</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Bülten</h3>
+            <p class="mt-5 text-sm leading-6 text-slate-600">Yeni firmaları ve sektör trendlerini e-posta ile takip edin.</p>
+            <div class="mt-4 flex gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2">
+              <input aria-label="E-posta adresi" type="email" placeholder="E-posta adresiniz" class="h-12 flex-1 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-orange-400" />
+              <button class="h-12 rounded-xl bg-orange-500 px-4 text-sm font-semibold text-white transition hover:bg-orange-600">Gönder</button>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Şirket</h3>
-          <ul class="mt-4 space-y-3 text-sm text-slate-600">
-            <li><a href="#" class="hover:text-slate-900">Hakkımızda</a></li>
-            <li><a href="#" class="hover:text-slate-900">İletişim</a></li>
-            <li><a href="#" class="hover:text-slate-900">İlan Ver</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Kategoriler</h3>
-          <ul class="mt-4 space-y-3 text-sm text-slate-600">
-            {categories.slice(0, 4).map((category) => (
-              <li><a href={`/firmalar/${category.slug}`} class="hover:text-slate-900">{category.name}</a></li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Bülten</h3>
-          <div class="mt-4 flex gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2">
-            <input aria-label="E-posta adresi" type="email" placeholder="E-posta adresiniz" class="h-12 flex-1 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none focus:border-orange-400" />
-            <button class="h-12 rounded-xl bg-orange-500 px-4 text-sm font-semibold text-white hover:bg-orange-600">Gönder</button>
+        <div class="mt-10 border-t border-slate-200 pt-6">
+          <div class="flex flex-col gap-4 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
+            <p>© 2026 FirMaps</p>
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="#" class="transition hover:text-slate-900">Gizlilik Politikası</a>
+              <a href="#" class="transition hover:text-slate-900">Kullanım Şartları</a>
+              <a href="#" class="transition hover:text-slate-900">KVKK</a>
+              <a href="#" class="transition hover:text-slate-900">Çerez Politikası</a>
+            </div>
           </div>
         </div>
       </div>
