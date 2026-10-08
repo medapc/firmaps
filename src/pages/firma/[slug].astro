@@ -46,18 +46,19 @@ const seoKeywords = company.keywords ?? [
   'Nevşehir kesimciler',
   'Transit kasa imalatı Nevşehir'
 ];
-const canonical = `https://www.firmaps.com/firma/${company.slug}`;
+const canonical = `https://firmaps.com/firma/${company.slug}/`;
+const businessId = `${canonical}#business`;
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': ['AutoBodyShop', 'LocalBusiness'],
+  '@type': 'AutoBodyShop',
+  '@id': businessId,
   name: company.name,
-  image: company.image,
+  image: new URL(company.image, Astro.site ?? 'https://firmaps.com').href,
   url: canonical,
-  telephone: company.phone,
-  priceRange: '$$',
+  telephone: company.phone.replace(/\s+/g, ''),
   description: seoDescription,
-  areaServed: ['Nevşehir', 'Kayseri', 'Aksaray', 'Konya', 'Amasya'],
+  areaServed: 'Nevşehir',
   address: {
     '@type': 'PostalAddress',
     streetAddress: company.address,
@@ -68,9 +69,8 @@ const schema = {
   },
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: company.phone,
+    telephone: company.phone.replace(/\s+/g, ''),
     contactType: 'customer service',
-    areaServed: 'TR',
     availableLanguage: ['Turkish']
   },
   openingHoursSpecification: [
@@ -82,12 +82,6 @@ const schema = {
     }
   ],
   hasMap: company.mapsLink,
-  sameAs: company.socials?.map((social) => social.url) ?? [],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: String(company.rating),
-    reviewCount: company.reviewCount
-  },
   makesOffer: (company.services ?? []).map((service) => ({
     '@type': 'Offer',
     itemOffered: {
@@ -95,20 +89,7 @@ const schema = {
       name: service.title,
       description: service.description
     }
-  })),
-  serviceType: [
-    'Ford Transit kesim',
-    'Transit kasa dönüşümü',
-    'Kaporta imalatı',
-    'Özel kasa üretimi'
-  ],
-  knowsAbout: [
-    'Nevşehir transit kesim',
-    'Ford Transit pikap kesimi',
-    'Panelvandan kamyonete dönüştürme',
-    'Özel kasa üretimi',
-    'Kaporta imalatı'
-  ]
+  }))
 };
 ---
 

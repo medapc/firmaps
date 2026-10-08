@@ -16,8 +16,13 @@ const {
   keywords = [],
   bodyClass = '',
   image = '/favicon2.png',
-  canonical = Astro.url.href
+  canonical = new URL(
+    Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`,
+    Astro.site ?? 'https://firmaps.com'
+  ).href
 } = Astro.props as Props;
+
+const imageUrl = new URL(image, Astro.site ?? 'https://firmaps.com').href;
 ---
 
 <!doctype html>
@@ -32,15 +37,16 @@ const {
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={imageUrl} />
     <meta property="og:site_name" content="FirMaps" />
     <meta property="og:locale" content="tr_TR" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="canonical" href={canonical} />
     <title>{title}</title>
     <link rel="icon" href="/favicon2.png" type="image/png" />
