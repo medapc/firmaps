@@ -88,7 +88,6 @@ export const companies: Company[] = [
     mapsLink: 'https://maps.google.com/?q=Lale%20Mahallesi%2C%20S%C3%BCmer%2C%20Sanayi%20Sitesi%20Sk.%20No%3A14%20Blok%20No%3A25%2C%2050040%20Nev%C5%9Fehir%20Merkez%2FNev%C5%9Fehir',
     isVerified: true,
     heroBadge: 'Transit kesim uzmanı',
-    tiktokVideoUrl: 'https://vt.tiktok.com/ZSqDWmyog/',
     keywords: [
       'Nevşehir transit kesim',
       'Nevşehir transit kesim fiyatları',
@@ -112,13 +111,10 @@ export const companies: Company[] = [
       { title: 'Kaporta yenileme paketi', description: 'Araç gövdesini modern ve estetik görünümle yeniden tasarlama hizmeti.' }
     ],
     seoArticle: [
-      'Karaşahin Kaporta, Nevşehir transit kesim alanında Ford Transit ve benzeri ticari araçlar için güvenilir, estetik ve işlevsel çözümler sunan bir kaporta ve özel kasa üretim uzmanıdır. Nevşehir transit kesim fiyatları arayan müşteriler için uygun ölçüler ve kullanım amacına göre tasarlanan çözümler, taşıma verimliliğini artırır.',
-      'Firmamızın uzmanlık alanları arasında Ford Transit kesim, Ford Transit pikap kesimi, panelvandan kamyonete dönüştürme, özel kasa üretimi ve kaporta imalatı yer alır. Transit kesiminde doğru şasi düzeni, dayanıklı kasa yapısı ve güvenli kullanım, müşterilerin en çok dikkat ettiği başlıklardandır.',
-      'Nevşehir merkezde faaliyet gösteren Karaşahin Kaporta, araçların işlevselliğini ve kullanım konforunu ön planda tutar. Araç sahipleri, bölüm ve ölçüleri doğru planlanan transit kesim, tekli veya çift teker model seçenekleri ile iş ihtiyaçlarına uygun çözümler elde eder.',
-      'Yüksek kaliteli malzeme, dikkatli üretim ve ölçü kontrolü ile sunulan hizmetler, transit kesim ustaları arasında güvenilir bir tercih olmasını sağlar. Müşterilerin ihtiyacına göre tasarlanan Ford Transit kasa imalatı ve kaporta yenileme süreçleri, araçların hem iş verimliliğini hem de görünümünü iyileştirir.'
-    ],
-    socials: [
-      { platform: 'tiktok', url: 'https://www.tiktok.com/@sertkayaotmtiv' }
+      'Karaşahin Kaporta, Nevşehir’de Ford Transit ve benzeri ticari araçlar için kaporta ve özel kasa çözümleri sunar. Araç düzenlemeleri, kullanım amacı ve ölçülere göre şekillenen seçeneklerle ticari ihtiyaçlara yöneliktir.',
+      'Firmanın belirttiği hizmetler arasında pikap kesimi, panelvandan kamyonete dönüştürme ve kaporta imalatı da yer alır. Kesim ve dönüşüm seçenekleri hakkında araç özelinde firmadan bilgi alınabilir.',
+      'Nevşehir Merkez’de faaliyet gösteren Karaşahin Kaporta, araçların işlevselliğini ve kullanım konforunu ön planda tutar. Mevcut açıklamada, bölüm ve ölçü planlamasının yanı sıra tekli veya çift teker model seçeneklerinden söz edilir.',
+      'Kasa imalatı ve kaporta yenileme çalışmalarında firma, malzeme, üretim ve ölçü kontrolünü vurgular. Müşteri ihtiyacına göre planlanan bu çalışmalar aracın işlevselliğine ve görünümüne odaklanır.'
     ]
   },
   {

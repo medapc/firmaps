@@ -15,6 +15,8 @@ if (!company) {
   throw new Error(`Firma bulunamadı: ${slug}`);
 }
 
+const isKarasahinProfile = company.slug === 'karasahin-kaporta';
+
 const tiktokEmbed = company.tiktokVideoUrl
   ? await fetch(`https://www.tiktok.com/oembed?url=${encodeURIComponent(company.tiktokVideoUrl)}`)
       .then((response) => (response.ok ? response.json() : null))
@@ -23,7 +25,7 @@ const tiktokEmbed = company.tiktokVideoUrl
 
 const tiktokHtml = tiktokEmbed?.html ?? '';
 
-const galleryImages = company.slug === 'karasahin-kaporta'
+const galleryImages = isKarasahinProfile
   ? [
       '/firmalar/karasahin/01.jpeg',
       '/firmalar/karasahin/02.jpeg',
@@ -35,6 +37,21 @@ const galleryImages = company.slug === 'karasahin-kaporta'
       '/firmalar/karasahin/08.jpeg',
       '/firmalar/karasahin/09.jpeg',
       '/firmalar/karasahin/10.jpeg'
+    ]
+  : [];
+
+const galleryAltTexts = isKarasahinProfile
+  ? [
+      'Açık kasalı beyaz ticari araç',
+      'Açık kasalı beyaz ticari aracın yandan görünümü',
+      'Açık kasalı beyaz ticari araç',
+      'Kırmızı kabinli, açık kasalı ticari araç',
+      'Açık kasalı aracın arka görünümü',
+      'Sarı ticari aracın yan görünümü',
+      'Beyaz ticari aracın arka bölümü',
+      'Bordo renkli açık kasalı ticari araç',
+      'Beyaz ticari aracın yandan görünümü',
+      'Beyaz ticari aracın önden görünümü'
     ]
   : [];
 
@@ -235,7 +252,7 @@ const schema = {
       <div class="space-y-8">
         <section id="hakkimizda" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
           <div class="mb-5 flex flex-col items-center justify-between gap-3 sm:flex-row sm:items-center">
-            <h2 class="text-3xl font-black text-slate-900">Nevşehir Transit Kesim ve Kaporta Çözümleri</h2>
+            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Karaşahin Kaporta hakkında' : 'Nevşehir Transit Kesim ve Kaporta Çözümleri'}</h2>
             <span class="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
           </div>
 
@@ -262,7 +279,7 @@ const schema = {
 
         {company.services && company.services.length > 0 && (
           <section id="hizmetlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">Nevşehir Transit Kesim ve Ford Transit Kasa Hizmetleri</h2>
+            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Transit kesim ve kaporta hizmetleri' : 'Nevşehir Transit Kesim ve Ford Transit Kasa Hizmetleri'}</h2>
             <div class="mt-6 grid gap-4 md:grid-cols-2">
               {company.services.map((service) => (
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center sm:text-left">
@@ -276,7 +293,7 @@ const schema = {
 
         {company.products && company.products.length > 0 && (
           <section id="urunlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">Ford Transit Kesim Pikap ve Özel Kasa Ürünleri</h2>
+            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Ford Transit pikap ve özel kasa çözümleri' : 'Ford Transit Kesim Pikap ve Özel Kasa Ürünleri'}</h2>
             <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {company.products.map((product) => (
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center sm:text-left">
@@ -290,7 +307,7 @@ const schema = {
 
         {tiktokHtml && (
           <section class="rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">Transit Kesim Çalışma ve Referans Videosu</h2>
+            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Video' : 'Transit Kesim Çalışma ve Referans Videosu'}</h2>
             <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-3">
               <div class="tiktok-embed-wrap [&>blockquote]:!m-0 [&>blockquote]:!max-w-none [&>blockquote]:!border-0 [&>iframe]:!mx-auto [&>iframe]:!max-w-full [&>iframe]:!rounded-xl">
                 <Fragment set:html={tiktokHtml} />
@@ -301,7 +318,7 @@ const schema = {
 
         {galleryImages.length > 0 && (
           <section id="galeri" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">Nevşehir Transit Kesim Öncesi Sonrası Galerisi</h2>
+            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Araç ve kasa görselleri' : 'Nevşehir Transit Kesim Öncesi Sonrası Galerisi'}</h2>
             <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {galleryImages.map((image, index) => (
                 <button
@@ -309,9 +326,10 @@ const schema = {
                   class="group overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-orange-200"
                   data-gallery-image={image}
                   data-gallery-index={index}
+                  data-gallery-alt={galleryAltTexts[index] ?? `${company.name} görsel ${index + 1}`}
                   aria-label={`${company.name} görsel ${index + 1}`}
                 >
-                  <img src={image} alt={`${company.name} görsel ${index + 1}`} class="h-32 w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" width="600" height="420" />
+                  <img src={image} alt={galleryAltTexts[index] ?? `${company.name} görsel ${index + 1}`} class="h-32 w-full object-cover transition duration-300 group-hover:scale-105" loading="lazy" width="600" height="420" />
                 </button>
               ))}
             </div>
@@ -319,7 +337,7 @@ const schema = {
         )}
 
         <section id="iletisim" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-          <h2 class="text-3xl font-black text-slate-900">Nevşehir Transit Kesim Fiyatı ve Randevu</h2>
+          <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Fiyat ve randevu için iletişim' : 'Nevşehir Transit Kesim Fiyatı ve Randevu'}</h2>
           <div class="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="space-y-4 text-sm text-slate-700">
               <div class="flex items-start justify-center gap-3 sm:justify-start">
@@ -444,7 +462,7 @@ const schema = {
               class="h-16 w-20 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-slate-800 p-0.5 transition hover:border-orange-300"
               aria-label={`${company.name} görsel ${index + 1}`}
             >
-              <img src={image} alt={`${company.name} görsel ${index + 1}`} class="h-full w-full object-cover" />
+              <img src={image} alt={galleryAltTexts[index] ?? `${company.name} görsel ${index + 1}`} class="h-full w-full object-cover" />
             </button>
           ))}
         </div>
@@ -464,6 +482,7 @@ const schema = {
 
       if (galleryButtons.length && galleryModal && galleryModalImage && galleryCloseButton && galleryPrevButton && galleryNextButton) {
         const galleryImageList = galleryButtons.map((button) => button.getAttribute('data-gallery-image')).filter(Boolean);
+        const galleryAltList = galleryButtons.map((button) => button.getAttribute('data-gallery-alt')).filter(Boolean);
         let galleryIndex = 0;
 
         const updateGalleryModal = (index) => {
@@ -471,7 +490,7 @@ const schema = {
           galleryIndex = safeIndex;
           const imageSrc = galleryImageList[safeIndex];
           galleryModalImage.src = imageSrc;
-          galleryModalImage.alt = `Firma görsel ${safeIndex + 1}`;
+          galleryModalImage.alt = galleryAltList[safeIndex] || `Firma görsel ${safeIndex + 1}`;
 
           galleryThumbButtons.forEach((button) => {
             const thumbIndex = Number(button.getAttribute('data-gallery-thumb-index'));
