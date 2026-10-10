@@ -55,20 +55,22 @@ const galleryAltTexts = isKarasahinProfile
     ]
   : [];
 
-const seoTitle = `${company.name} | Nevşehir Transit Kesim, Ford Transit Pikap ve Kasa Üretimi`;
-const seoDescription = `${company.name} Nevşehir'de transit kesim, Ford Transit pikap kesimi, panelvandan kamyonete dönüştürme, kaporta imalatı ve özel kasa üretimi hizmetleri sunar. Nevşehir transit kesim fiyatları ve Ford Transit kesim kasa çözümleri için iletişime geçin.`;
-const seoKeywords = company.keywords ?? [
-  'Nevşehir transit kesim',
-  'Ford Transit kesim',
-  'Nevşehir kesimciler',
-  'Transit kasa imalatı Nevşehir'
-];
+const seoTitle = company.seoTitle ?? `${company.name} | Nevşehir Transit Kesim, Ford Transit Pikap ve Kasa Üretimi`;
+const seoDescription = company.metaDescription ?? `${company.name} Nevşehir'de transit kesim, Ford Transit pikap kesimi, panelvandan kamyonete dönüştürme, kaporta imalatı ve özel kasa üretimi hizmetleri sunar. Nevşehir transit kesim fiyatları ve Ford Transit kesim kasa çözümleri için iletişime geçin.`;
+const seoKeywords = company.keywords ?? (company.schemaType === 'Restaurant'
+  ? ['Oses Çiğ Köfte Nevşehir', 'Nevşehir 2000 Evler çiğ köfte', 'Nevşehir çiğ köfte sipariş']
+  : [
+      'Nevşehir transit kesim',
+      'Ford Transit kesim',
+      'Nevşehir kesimciler',
+      'Transit kasa imalatı Nevşehir'
+    ]);
 const canonical = `https://firmaps.com/firma/${company.slug}/`;
 const businessId = `${canonical}#business`;
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'AutoBodyShop',
+  '@type': company.schemaType ?? 'AutoBodyShop',
   '@id': businessId,
   name: company.name,
   image: new URL(company.image, Astro.site ?? 'https://firmaps.com').href,
@@ -81,7 +83,7 @@ const schema = {
     streetAddress: company.address,
     addressLocality: company.city,
     addressRegion: company.city,
-    postalCode: '50040',
+    postalCode: company.postalCode ?? '50040',
     addressCountry: 'TR'
   },
   contactPoint: {
@@ -90,15 +92,25 @@ const schema = {
     contactType: 'customer service',
     availableLanguage: ['Turkish']
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '08:00',
-      closes: '20:00'
-    }
-  ],
+  ...(company.schemaType !== 'Restaurant' && {
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '08:00',
+        closes: '20:00'
+      }
+    ]
+  }),
   hasMap: company.mapsLink,
+  ...(company.servesCuisine && { servesCuisine: company.servesCuisine }),
+  ...(company.schemaType === 'Restaurant' && !company.ratingSourceUrl && {
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: company.rating,
+      reviewCount: company.reviewCount
+    }
+  }),
   makesOffer: (company.services ?? []).map((service) => ({
     '@type': 'Offer',
     itemOffered: {
@@ -181,7 +193,7 @@ const schema = {
 
             <div class="flex items-end justify-center sm:justify-start">
               <div class="mx-auto max-w-3xl text-center text-white sm:mx-0 sm:text-left">
-                <h1 class="text-3xl font-black tracking-tight sm:text-4xl lg:text-7xl">{company.name} | Nevşehir Transit Kesim</h1>
+                <h1 class="text-3xl font-black tracking-tight sm:text-4xl lg:text-7xl">{company.seoHeading ?? `${company.name} | Nevşehir Transit Kesim`}</h1>
                 <p class="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-200 sm:mx-0 sm:mt-4 sm:text-base sm:leading-8 lg:text-lg">{company.shortDescription}</p>
                 <div class="mt-4 flex flex-wrap justify-center gap-2 sm:mt-6 sm:justify-start sm:gap-3">
                   <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-full bg-orange-500 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-orange-500/30 transition duration-200 hover:-translate-y-0.5 hover:bg-orange-600 hover:shadow-xl sm:px-5 sm:py-3 sm:text-sm">
@@ -252,8 +264,14 @@ const schema = {
       <div class="space-y-8">
         <section id="hakkimizda" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
           <div class="mb-5 flex flex-col items-center justify-between gap-3 sm:flex-row sm:items-center">
-            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Karaşahin Kaporta hakkında' : 'Nevşehir Transit Kesim ve Kaporta Çözümleri'}</h2>
-            <span class="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+            <h2 class="text-3xl font-black text-slate-900">{company.schemaType === 'Restaurant' ? `${company.name} hakkında` : isKarasahinProfile ? 'Karaşahin Kaporta hakkında' : 'Nevşehir Transit Kesim ve Kaporta Çözümleri'}</h2>
+            {company.ratingSourceUrl ? (
+              <a href={company.ratingSourceUrl} target="_blank" rel="noreferrer" class="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
+                Resmî web sitesinde belirtilen puan: {company.rating.toFixed(1).replace('.', ',')}/5 · {company.reviewCount} değerlendirme
+              </a>
+            ) : (
+              <span class="rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+            )}
           </div>
 
           <div class="space-y-4 text-base leading-8 text-slate-600">
@@ -279,7 +297,7 @@ const schema = {
 
         {company.services && company.services.length > 0 && (
           <section id="hizmetlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Transit kesim ve kaporta hizmetleri' : 'Nevşehir Transit Kesim ve Ford Transit Kasa Hizmetleri'}</h2>
+            <h2 class="text-3xl font-black text-slate-900">{company.schemaType === 'Restaurant' ? 'Çiğ köfte ve sipariş seçenekleri' : isKarasahinProfile ? 'Transit kesim ve kaporta hizmetleri' : 'Nevşehir Transit Kesim ve Ford Transit Kasa Hizmetleri'}</h2>
             <div class="mt-6 grid gap-4 md:grid-cols-2">
               {company.services.map((service) => (
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center sm:text-left">
@@ -293,7 +311,7 @@ const schema = {
 
         {company.products && company.products.length > 0 && (
           <section id="urunlerimiz" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-            <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Ford Transit pikap ve özel kasa çözümleri' : 'Ford Transit Kesim Pikap ve Özel Kasa Ürünleri'}</h2>
+            <h2 class="text-3xl font-black text-slate-900">{company.schemaType === 'Restaurant' ? 'Menüden öne çıkanlar' : isKarasahinProfile ? 'Ford Transit pikap ve özel kasa çözümleri' : 'Ford Transit Kesim Pikap ve Özel Kasa Ürünleri'}</h2>
             <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {company.products.map((product) => (
                 <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 text-center sm:text-left">
@@ -337,7 +355,7 @@ const schema = {
         )}
 
         <section id="iletisim" class="scroll-mt-28 rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-sm sm:p-8 sm:text-left">
-          <h2 class="text-3xl font-black text-slate-900">{isKarasahinProfile ? 'Fiyat ve randevu için iletişim' : 'Nevşehir Transit Kesim Fiyatı ve Randevu'}</h2>
+          <h2 class="text-3xl font-black text-slate-900">{company.schemaType === 'Restaurant' ? 'Adres, çalışma saatleri ve iletişim' : isKarasahinProfile ? 'Fiyat ve randevu için iletişim' : 'Nevşehir Transit Kesim Fiyatı ve Randevu'}</h2>
           <div class="mt-6 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
             <div class="space-y-4 text-sm text-slate-700">
               <div class="flex items-start justify-center gap-3 sm:justify-start">
@@ -361,6 +379,7 @@ const schema = {
               <div class="flex flex-wrap justify-center gap-3 pt-2 sm:justify-start">
                 <a href={`https://wa.me/${company.phone.replace(/\D/g, '')}?text=${encodeURIComponent('Merhaba, firmayı FirMaps üzerinden gördüm. Bilgi almak istiyorum.')}`} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-600">WhatsApp</a>
                 <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(company.address)}`} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300">Yol tarifi</a>
+                {company.website && <a href={company.website} target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300">Resmî web sitesi</a>}
               </div>
             </div>
 
@@ -381,8 +400,14 @@ const schema = {
       <aside class="space-y-6">
         <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
           <div class="mb-4 flex items-center justify-between">
-            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Puan</span>
-            <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{company.ratingSourceUrl ? 'Kaynak puanı' : 'Puan'}</span>
+            {company.ratingSourceUrl ? (
+              <a href={company.ratingSourceUrl} target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">
+                Resmî web sitesinde belirtilen puan: {company.rating.toFixed(1).replace('.', ',')}/5 · {company.reviewCount} değerlendirme
+              </a>
+            ) : (
+              <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-600">★ {company.rating.toFixed(1)}</span>
+            )}
           </div>
 
           <div class="space-y-4 text-sm text-slate-700">

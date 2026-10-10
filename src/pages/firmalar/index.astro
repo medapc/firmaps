@@ -54,9 +54,15 @@ const featuredCompanies = companies.slice(0, 6);
             <p class="mt-3 text-sm leading-6 text-slate-600">{company.shortDescription}</p>
             <div class="mt-4 flex items-center gap-2 text-sm text-slate-600">
               <span>★</span>
-              <span>{company.rating.toFixed(1)} · {company.city}</span>
+              {company.ratingSourceUrl ? (
+                <a href={company.ratingSourceUrl} target="_blank" rel="noreferrer" class="underline decoration-slate-300 underline-offset-2">
+                  Resmî web sitesinde belirtilen puan: {company.rating.toFixed(1).replace('.', ',')}/5 · {company.reviewCount} değerlendirme
+                </a>
+              ) : (
+                <span>{company.rating.toFixed(1)} · {company.city}</span>
+              )}
             </div>
-            <a href={`/firma/${company.slug}`} class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">Firma profili</a>
+            <a href={`/firma/${company.slug}/`} class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800">Firma profili</a>
           </article>
         ))}
       </div>

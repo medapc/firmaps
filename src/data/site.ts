@@ -37,6 +37,14 @@ export type Company = {
   isVerified: boolean;
   heroBadge?: string;
   tiktokVideoUrl?: string;
+  schemaType?: 'Restaurant';
+  seoHeading?: string;
+  seoTitle?: string;
+  metaDescription?: string;
+  website?: string;
+  postalCode?: string;
+  servesCuisine?: string[];
+  ratingSourceUrl?: string;
   keywords?: string[];
   products?: { title: string; description: string }[];
   services?: { title: string; description: string }[];
@@ -115,6 +123,52 @@ export const companies: Company[] = [
       'Firmanın belirttiği hizmetler arasında pikap kesimi, panelvandan kamyonete dönüştürme ve kaporta imalatı da yer alır. Kesim ve dönüşüm seçenekleri hakkında araç özelinde firmadan bilgi alınabilir.',
       'Nevşehir Merkez’de faaliyet gösteren Karaşahin Kaporta, araçların işlevselliğini ve kullanım konforunu ön planda tutar. Mevcut açıklamada, bölüm ve ölçü planlamasının yanı sıra tekli veya çift teker model seçeneklerinden söz edilir.',
       'Kasa imalatı ve kaporta yenileme çalışmalarında firma, malzeme, üretim ve ölçü kontrolünü vurgular. Müşteri ihtiyacına göre planlanan bu çalışmalar aracın işlevselliğine ve görünümüne odaklanır.'
+    ]
+  },
+  {
+    id: 'oses-cig-kofte-nevsehir',
+    name: 'Oses Çiğ Köfte Nevşehir',
+    slug: 'oses-cig-kofte-nevsehir',
+    category: 'Gıda',
+    categorySlug: 'gida',
+    city: 'Nevşehir',
+    citySlug: 'nevsehir',
+    district: 'Nevşehir Merkez',
+    districtSlug: 'nevsehir-merkez',
+    rating: 4.8,
+    reviewCount: 124,
+    service: 'Çiğ köfte, dürüm ve sipariş',
+    shortDescription: 'Nevşehir 2000 Evler’de çiğ köfte ve dürüm menüsü; telefonla ve çevrim içi sipariş.',
+    description: 'Oses Çiğ Köfte Nevşehir, 2000 Evler Mahallesi’ndeki şubesinde çiğ köfte, dürüm ve menü seçenekleri sunar. Menü ve sipariş için telefonla iletişim kurabilir veya resmî web sitesini ziyaret edebilirsiniz.',
+    image: 'https://osesnevsehir.com/images/banner-ozel.jpg',
+    price: 'Menüyü inceleyin',
+    phone: '+90 384 215 25 02',
+    address: '2000 Evler Mah. Şht. Musa Taşdemir Sk. No:13, 50100 Nevşehir',
+    workingHours: 'Her gün 11:00–02:00',
+    mapsEmbedUrl: 'https://www.google.com/maps?q=2000%20Evler%20Mah.%20%C5%9Eht.%20Musa%20Ta%C5%9Fdemir%20Sk.%20No%3A13%2C%2050100%20Nev%C5%9Fehir&output=embed',
+    mapsLink: 'https://maps.google.com/?q=2000%20Evler%20Mah.%20%C5%9Eht.%20Musa%20Ta%C5%9Fdemir%20Sk.%20No%3A13%2C%2050100%20Nev%C5%9Fehir',
+    isVerified: false,
+    schemaType: 'Restaurant',
+    seoHeading: 'Oses Çiğ Köfte Nevşehir',
+    seoTitle: 'Oses Çiğ Köfte Nevşehir | 2000 Evler Menü ve Sipariş',
+    metaDescription: 'Nevşehir 2000 Evler’deki Oses Çiğ Köfte menüsünü inceleyin. Telefonla veya resmî web sitesinden sipariş verin; adres ve çalışma saatlerini görün.',
+    website: 'https://osesnevsehir.com/',
+    postalCode: '50100',
+    servesCuisine: ['Çiğ Köfte', 'Dürüm', 'Türk Mutfağı'],
+    ratingSourceUrl: 'https://osesnevsehir.com/',
+    services: [
+      { title: 'Çiğ köfte ve dürüm', description: 'Çiğ köfte dürüm ve tabak seçenekleri.' },
+      { title: 'Menü seçenekleri', description: 'Tekil dürüm seçenekleri, içecekli menüler ve grup menüleri.' },
+      { title: 'Sipariş', description: 'Telefonla, WhatsApp üzerinden veya resmî web sitesinden sipariş.' }
+    ],
+    products: [
+      { title: 'Enfes Dürüm', description: '100 gram çiğ köfte dürüm.' },
+      { title: 'Mega Dürüm', description: '150 gram çiğ köfte dürüm.' },
+      { title: 'Çiğ Köfte Tabak', description: 'Taze yeşillikler, domates ve limon ile servis edilir.' },
+      { title: 'Dürüm + Ayran Menü', description: '100 gram orta dürüm ve ayran.' },
+      { title: 'Dürüm + İçecek Menü', description: 'Büyük dürüm ve seçilen içecek.' },
+      { title: 'İkili Menü', description: 'İki büyük dürüm ve iki içecek.' },
+      { title: 'Dörtlü Parti Menü', description: 'Dört dürüm ve dört içecek.' }
     ]
   },
   {
